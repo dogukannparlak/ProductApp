@@ -1,0 +1,44 @@
+﻿<div class="accordion">
+    <h2>Ürün Kategorileri</h2>
+    @foreach (var category in Model)
+    {
+        <div class="accordion-item">
+            <div class="accordion-header" data-toggle="collapse" data-target="#category-@category.CategoryID">
+                <h4>@category.CategoryName</h4>
+            </div>
+            <div id="category-@category.CategoryID" class="accordion-content collapse">
+                @foreach (var subcategory in category.SubCategories)
+                {
+                    <div class="accordion-item">
+                        <div class="accordion-header" data-toggle="collapse" data-target="#subcategory-@subcategory.SubCategoryID">
+                            <h5>@subcategory.SubCategoryName</h5>
+                        </div>
+                        <div id="subcategory-@subcategory.SubCategoryID" class="accordion-content collapse">
+                            @foreach (var product in subcategory.Products)
+                            {
+                                <div class="container mb-3 p-3 border rounded bg-light">
+                                    <h5 class="card-title">@product.ProductName</h5>
+                                    <p class="card-text">@product.Description</p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                        
+
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@* JavaScript to handle accordion functionality *@
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".accordion-header").click(function () {
+                $(this).next(".accordion-content").slideToggle();
+                $(this).toggleClass("collapsed");
+            });
+        });
+    </script>
+}
